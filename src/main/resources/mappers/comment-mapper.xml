@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.nextit.springmvc.comment.CommentMapper">
+	<select id="selectComments" parameterType="int" resultType="commentDTO">
+		SELECT
+			ID,
+			BOARD_ID,
+			CONTENT,
+			WRITER,
+			REGISTER_DATE,
+			MODIFIED_DATE
+		FROM
+			COMMENTS
+		WHERE
+			BOARD_ID = #{boardId}
+		ORDER BY
+			REGISTER_DATE
+	</select>
+	<select id="selectComment" parameterType="int" resultType="commentDTO">
+		SELECT
+			ID,
+			BOARD_ID,
+			CONTENT,
+			WRITER,
+			REGISTER_DATE,
+			MODIFIED_DATE
+		FROM
+			COMMENTS
+		WHERE
+			ID = #{id}
+	</select>
+	<insert id="registerComment" parameterType="commentDTO" useGeneratedKeys="true"
+				keyColumn="id" keyProperty="id">
+		INSERT INTO
+			COMMENTS
+			(BOARD_ID, CONTENT, WRITER)
+		VALUES
+			(#{boardId}, #{content}, #{writer})
+	</insert>
+	<update id="modifyComment" parameterType="commentDTO">
+		UPDATE
+			COMMENTS
+		SET
+			CONTENT = #{content},
+			MODIFIED_DATE = SYSDATE
+		WHERE
+			ID = #{id}
+	</update>
+	<delete id="removeComment" parameterType="int">
+		DELETE FROM
+			COMMENTS
+		WHERE
+			ID = #{id}
+	</delete>
+</mapper>
+
+
+
+

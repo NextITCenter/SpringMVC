@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!-- 주로 View와 관련된 설정 그리고 Controller 관련 설정도 하는 파일 -->
+    <!--
+     Spring MVC의 @Controller를 사용할 수 있도록 하는 설정
+     (DispatcherServlet과 @Controller가 등록된 클래스를 연결해주는 역할)
+     -->
+    <mvc:annotation-driven/>
+    <bean class="kr.or.nextit.springmvc.board.BoardController"/>
+</beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="jdbcUrl" value="jdbc:oracle:thin:@nextit.or.kr:1521:xe"/>
+        <property name="username" value="std225"/>
+        <property name="password" value="oracle21c"/>
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath*:mappers/*.xml"/>
+        <!--
+        typeAliasesPackage: value에 등록된 패키지 안의 모든 DTO(VO) 클래스를
+        자동으로 alias를 사용할 수 있도록 세팅
+        예) board.BoardDTO => boardDTO로 alias가 자동 적용된다.
+        comment.CommentDTO => commentDTO로 alias가 자동 적용
+        kr.or.nextit.springmvc.StudentNameDTO => studentNameDTO로 alias가 적용됨
+         -->
+        <property name="typeAliasesPackage" value="kr.or.nextit.springmvc"/>
+        <property name="configuration">
+            <bean class="org.apache.ibatis.session.Configuration">
+                <property name="mapUnderscoreToCamelCase" value="true"/>
+            </bean>
+        </property>
+    </bean>
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory"/>
+    </bean>
+    <!-- base-package에 존재하는 모든 Mapper 인터페이스를 스프링 빈으로 등록 -->
+    <mybatis-spring:scan base-package="kr.or.nextit.springmvc"/>
+
+    <!-- 서비스 빈 등록 -->
+    <bean id="boardService" class="kr.or.nextit.springmvc.board.BoardService"/>
+</beans>
