@@ -1,6 +1,7 @@
 package kr.or.nextit.springmvc.board;
 
 import kr.or.nextit.springmvc.file.FileDTO;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
