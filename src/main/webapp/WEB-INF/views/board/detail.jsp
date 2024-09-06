@@ -33,7 +33,8 @@
 		첨부파일:
 		<div>
 		<c:forEach items="${board.fileList}" var="file">
-			<a href="/file/download?id=${file.id}">${file.originalName}</a>
+<%--			<a href="/file/download?id=${file.id}">${file.originalName}</a>--%>
+			<a href="/download/${file.id}">${file.originalName}</a>
 		</c:forEach>
 		</div>
 	</div>

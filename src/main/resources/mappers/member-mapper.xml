@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.nextit.springmvc.member.MemberMapper">
+    <select id="selectMembers" resultType="memberDTO">
+        SELECT
+            MEM_ID,
+            MEM_NAME,
+            MEM_HP,
+            MEM_MAIL
+        FROM
+            MEMBER
+        WHERE
+            MEM_DEL_YN != 'Y'
+    </select>
+    <select id="selectMember" resultType="memberDTO">
+        SELECT
+            MEM_ID,
+            MEM_NAME,
+            MEM_BIR,
+            MEM_HP,
+            MEM_MAIL,
+            MEM_ZIP,
+            MEM_ADD1,
+            MEM_ADD2
+        FROM
+            MEMBER
+        WHERE
+            MEM_ID = #{memId}
+    </select>
+    <insert id="insertMember" parameterType="memberDTO">
+        INSERT INTO
+            MEMBER
+            (MEM_ID, MEM_PASS, MEM_NAME, MEM_BIR, MEM_HP, MEM_MAIL)
+        VALUES
+            (#{memId}, #{memPass}, #{memName}, #{memBir}, #{memHp}, #{memMail})
+    </insert>
+    <update id="updateMember" parameterType="memberDTO">
+        UPDATE
+            MEMBER
+        <set>
+        <if test="memName != null and memName != ''">
+            MEM_NAME = #{memName},
+        </if>
+        <if test="memBir != null">
+            MEM_BIR = #{memBir},
+        </if>
+        <if test='memHp != null and memHp != ""'>
+            MEM_HP = #{memHp},
+        </if>
+        <if test="memMail != null and memMail != ''">
+            MEM_MAIL = #{memMail}
+        </if>
+        </set>
+        WHERE
+            MEM_ID = #{memId}
+    </update>
+    <delete id="deleteMember" parameterType="string">
+        UPDATE
+            MEMBER
+        SET
+            MEM_DEL_YN = 'Y'
+        WHERE
+            MEM_ID = #{memId}
+    </delete>
+</mapper>
+
+
+
+
