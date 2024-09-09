@@ -14,19 +14,19 @@
 <body>
 <div class="container">
 	<div class="form-floating mb-3">
-		<input type="text" name="id" id="boardId" value="${board.id}" class="form-control">
-		<label for="boardId">게시글 아이디:</label>
+		<input type="text" id="id" value="${board.id}" class="form-control">
+		<label for="id">게시글 아이디:</label>
 	</div>
 	<div class="form-floating mb-3">
-		<input type="text" name="title" id="boardTitle" value="${board.title}" class="form-control">
+		<input type="text" id="boardTitle" value="${board.title}" class="form-control">
 		<label for="boardTitle">제목:</label>
 	</div>
 	<div class="form-floating mb-3">
-		<input type="text" name="writer" id="boardWriter" value="${board.writer}" class="form-control">
+		<input type="text" id="boardWriter" value="${board.writer}" class="form-control">
 		<label for="boardWriter">작성자:</label>
 	</div>
 	<div class="form-floating mb-3">
-		<textarea style="height: 100px" name="content" id="boardContent" class="form-control">${board.content}</textarea>
+		<textarea style="height: 100px" id="boardContent" class="form-control">${board.content}</textarea>
 		<label for="boardContent">내용:</label>
 	</div>
 	<div>
@@ -57,7 +57,7 @@
 				</span>
 			</div>
 			<input type="hidden" name="boardId" id="boardId" value="${board.id}">
-			<input type="hidden" name="writer" id="writer" value="${sessionScope.member.memId }">
+			<input type="hidden" name="writer" id="writer" value="miso">
 		</form>
 	</div>
 	<div id="commentList" class="list-group mb-3">
@@ -93,12 +93,17 @@
 		fetch("/comment/new", {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/x-www-form-urlencoded"
+				"Content-Type": "application/json"
 			},
-			// "Content-Type": "application/json"
+			// "Content-Type": "application/x-www-form-urlencoded"
 			// "Content-Type": "multipart/form-data" => 첨부파일 처리하는 설정 필요
 			// Content-Type을 생략하면 기본적으로 text/plain;charset=UTF-8로 전송한다.
-			body: `boardId=\${document.querySelector("#boardId").value}&content=\${document.querySelector("#content").value}&writer=\${document.querySelector("#writer").value}`
+			// body: `boardId=\${document.querySelector("#boardId").value}&content=\${document.querySelector("#content").value}&writer=\${document.querySelector("#writer").value}`
+			body: JSON.stringify({
+				boardId: document.querySelector("#boardId").value,
+				content: document.querySelector("#content").value,
+				writer: document.querySelector("#writer").value
+			})
 		})
 		.then(response => response.json())
 		.then(data => {
