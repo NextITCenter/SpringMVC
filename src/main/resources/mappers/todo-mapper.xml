@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper의 namespace는 Mapper 인터페이스와 연동할 때 사용 -->
+<mapper namespace="kr.or.nextit.springmvc.todo.TodoMapper">
+	<select id="selectTotoList" resultType="todoVO">
+		SELECT
+			T_NO,
+			TITLE,
+			WRITER,
+			COMPLETE,
+			DUE_DATE
+		FROM
+			TODO
+	</select>
+	<select id="selectToto" parameterType="int" resultType="todoVO">
+		SELECT
+			T_NO,
+			TITLE,
+			WRITER,
+			COMPLETE,
+			DUE_DATE
+		FROM
+			TODO
+		WHERE
+			T_NO = #{tNo}
+	</select>
+	<insert id="insertTodo" parameterType="todoVO">
+		INSERT INTO TODO
+			(TITLE, WRITER, DUE_DATE)
+		VALUES
+			(#{title}, #{writer}, #{dueDate})
+	</insert>
+	<update id="updateTodo" parameterType="todoVO">
+		UPDATE
+			TODO
+		SET
+			TITLE = #{title},
+			WRITER = #{writer},
+			DUE_DATE = #{dueDate}
+		WHERE
+			T_NO = #{tNo}
+	</update>
+	<delete id="deleteTodo">
+		DELETE FROM
+			TODO
+		WHERE
+			T_NO = #{tNo}
+	</delete>
+	<update id="updateComplete" parameterType="todoVO">
+		UPDATE
+			TODO
+		SET
+			COMPLETE = #{complete}
+		WHERE
+			T_NO = #{tNo}
+	</update>
+	<select id="selectComplete" parameterType="int" resultType="todoVO">
+		SELECT
+			T_NO,
+			COMPLETE
+		FROM
+			TODO
+		WHERE
+			T_NO = #{tNo}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
