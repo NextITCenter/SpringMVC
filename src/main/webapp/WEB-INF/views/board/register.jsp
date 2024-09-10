@@ -1,3 +1,4 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,7 +16,7 @@
 	</div>
 	<div>
 		<label>작성자:
-			<input type="text" name="writer" value="${sessionScope.member.memId}">
+			<input type="text" name="writer" value="<sec:authorize access="isAuthenticated()"><sec:authentication property="principal.username"/></sec:authorize>">
 		</label>
 	</div>
 	<div>
@@ -31,6 +32,7 @@
 	<div>
 		<button>등록</button>
 	</div>
+	<sec:csrfInput/>
 </form>
 </body>
 </html>

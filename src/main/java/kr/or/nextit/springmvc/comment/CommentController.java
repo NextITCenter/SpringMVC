@@ -31,7 +31,6 @@ public class CommentController {
         * 요청 바디(request body)에 데이터를 전송
         *
         * */
-        System.out.println(comment);
         return service.registerComment(comment);
     }
 }

@@ -22,7 +22,7 @@
     </listener>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:context-common.xml</param-value>
+        <param-value>classpath*:context-*.xml</param-value>
     </context-param>
 
     <!-- dispatcher-servlet.xml: View(Controller) 관련된 객체들을 선언하는 곳 -->
@@ -51,6 +51,14 @@
     </filter>
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 </web-app>

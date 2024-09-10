@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
+    <!--
+        로그인 및 로그아웃, 요청(url)과 권한에 따른 동작 제어
+    -->
+
+    <security:http>
+        <security:form-login default-target-url="/boards" />
+        <security:logout invalidate-session="true" logout-success-url="/boards"/>
+        <!--
+         isAuthenticated(): 로그인한 사용자인지 => 로그인이 되어 있으면 true
+         isAnonymous(): 로그인하지 않은 사용자인지 => 로그인이 안되어 있으면 true
+         permitAll(): 권한이 없는 모든 사용자 접근 가능 => access 조건을 true 로 만든다.
+         denyAll(): 모든 권한 접근 거부 => access 조건을 false 로 만든다.
+        -->
+        <security:csrf disabled="true"/>
+        <security:intercept-url pattern="/todo/**" access="hasRole('ROLE_MANAGER')"/>
+        <security:intercept-url pattern="/boards" access="permitAll()"/>
+        <security:intercept-url pattern="/boards/*" access="hasRole('ROLE_MANAGER')"/>
+        <security:intercept-url pattern="/member/**" access="isAnonymous()"/>
+        <security:intercept-url pattern="/login" access="permitAll()"/>
+        <security:intercept-url pattern="/logout" access="isAuthenticated()"/>
+    </security:http>
+    <!--
+        사용자 관리: authentication과 authorization
+    -->
+    <security:authentication-manager>
+        <!--
+            1. InMemory 방식
+                따라서 이 파일에 사용자와 패스워드를 등록해야 한다.
+            2. JDBC 방식
+                DB에 연결해서 사용자와 패스워드를 처리하는 방식
+            사용자를 관리자, 일반유저로 나눈다고 할 경우
+            manager, user, admin =>
+        -->
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="admin" password="{noop}1234" authorities="ROLE_ADMIN,ROLE_MANAGER,ROLE_USER"/>
+                <security:user name="miso" password="{noop}1234" authorities="ROLE_MANAGER,ROLE_USER"/>
+                <security:user name="chopper" password="{noop}1234" authorities="ROLE_USER"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+</beans>
+
+
+
+
+
+
+
+
+
+

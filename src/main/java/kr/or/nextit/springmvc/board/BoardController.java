@@ -1,6 +1,7 @@
 package kr.or.nextit.springmvc.board;
 
 import kr.or.nextit.springmvc.file.FileDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Controller
 public class BoardController {
+//    private static final Logger log = LoggerFactory.getLogger(BoardController.class);
+
     private static final String FILE_PATH = "c:\\Users\\pc11\\upload\\";
     @Autowired
     private BoardService service;
@@ -26,6 +30,9 @@ public class BoardController {
     @GetMapping("/boards")
     public String boards(Model model) {
         List<BoardDTO> boards = service.selectBoards();
+        // logging 단계: trace, debug, info, warn, error
+//        log.debug("boards: " + boards + " size: " + boards.size());
+        log.debug("boards: {} size: {}", boards, boards.size());
         model.addAttribute("boards", boards);
         return "board/list";
     }

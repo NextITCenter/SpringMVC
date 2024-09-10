@@ -1,10 +1,9 @@
 package kr.or.nextit.springmvc.todo;
 
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

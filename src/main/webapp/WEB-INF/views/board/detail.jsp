@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,7 +58,8 @@
 				</span>
 			</div>
 			<input type="hidden" name="boardId" id="boardId" value="${board.id}">
-			<input type="hidden" name="writer" id="writer" value="miso">
+			<input type="hidden" name="writer" id="writer" value="<sec:authorize access="isAuthenticated()"><sec:authentication property="principal.username"/></sec:authorize>">
+			<sec:csrfInput/>
 		</form>
 	</div>
 	<div id="commentList" class="list-group mb-3">
