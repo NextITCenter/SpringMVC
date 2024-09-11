@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <!-- 데스크탑 화면과 모바일 화면을 비슷한 비율로 처리하기 위한 코드 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<sec:csrfMetaTags/>
 <title>Insert title here</title>
 <!-- 이곳에 스타일시트 -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -92,11 +93,14 @@
 	*/
 	registerBtn.addEventListener("click", (e) => {
 		// fectch보다 사용하기 편한 axios 라이브러리 사용
+		const csrfHeader = document.querySelector("meta[name=_csrf_header]").getAttribute("content")
+		const csrfValue = document.querySelector("meta[name=_csrf]").getAttribute("content")
+		let headers = new Headers();
+		headers.append(csrfHeader, csrfValue);
+		headers.append("Content-Type", "application/json")
 		fetch("/comment/new", {
 			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
+			headers: headers,
 			// "Content-Type": "application/x-www-form-urlencoded"
 			// "Content-Type": "multipart/form-data" => 첨부파일 처리하는 설정 필요
 			// Content-Type을 생략하면 기본적으로 text/plain;charset=UTF-8로 전송한다.

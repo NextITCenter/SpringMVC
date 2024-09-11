@@ -1,12 +1,14 @@
 package kr.or.nextit.springmvc.comment;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class CommentController {
@@ -21,7 +23,8 @@ public class CommentController {
 
     @PostMapping("/comment/new")
     @ResponseBody
-    public CommentDTO registerComment(@RequestBody CommentDTO comment, Model model) {
+    public CommentDTO registerComment(@RequestBody CommentDTO comment, String _csrf, Model model) {
+        log.info("_csrf: {}", _csrf);
         /*
         * 참고: @RequestBody: 전달된 요청(request)의 내용(body)을 이용해서 해당 파라미터의
         * 타입으로 변환을 요구한다. 내부적으로 HttpMessageConverter 타입의 객체들을 이용해서
