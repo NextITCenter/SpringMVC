@@ -29,6 +29,7 @@
 	</div>
 	</c:otherwise>
 </c:choose>
+<a href="/membro/register">회원 가입</a>
 <a href="/boards/register">게시글 등록</a>
 <table>
 	<tr>

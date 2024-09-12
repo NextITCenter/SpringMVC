@@ -1,6 +1,7 @@
 package kr.or.nextit.springmvc.board;
 
 import kr.or.nextit.springmvc.file.FileDTO;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 

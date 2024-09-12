@@ -15,7 +15,7 @@
          POST 방식으로 요청시 토큰을 발행하여 csrf 공격 방지
          개발 단계에서만 설정하고 운영할 때는 다시 해제시켜야함
          -->
-        <security:csrf disabled="false"/>
+        <security:csrf disabled="true"/>
 
         <!--
          isAuthenticated(): 로그인한 사용자인지 => 로그인이 되어 있으면 true
@@ -32,6 +32,9 @@
         <security:intercept-url pattern="/login" access="permitAll()"/>
         <security:intercept-url pattern="/logout" access="isAuthenticated()"/>
     </security:http>
+
+    <!-- 반드시 패스워드를 암호화해서 처리해야한다. -->
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
     <!--
         사용자 관리: authentication과 authorization
     -->
@@ -44,15 +47,15 @@
             사용자를 관리자, 일반유저로 나눈다고 할 경우
             manager, user, admin =>
         -->
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="admin" password="{noop}1234" authorities="ROLE_ADMIN,ROLE_MANAGER,ROLE_USER"/>
-                <security:user name="miso" password="{noop}1234" authorities="ROLE_MANAGER,ROLE_USER"/>
-                <security:user name="chopper" password="{noop}1234" authorities="ROLE_USER"/>
-            </security:user-service>
+        <security:authentication-provider user-service-ref="loginService">
+<!--            <security:user-service>-->
+<!--                <security:user name="admin" password="{noop}1234" authorities="ROLE_ADMIN,ROLE_MANAGER,ROLE_USER"/>-->
+<!--                <security:user name="miso" password="{noop}1234" authorities="ROLE_MANAGER,ROLE_USER"/>-->
+<!--                <security:user name="chopper" password="{noop}1234" authorities="ROLE_USER"/>-->
+<!--            </security:user-service>-->
+        <security:password-encoder ref="passwordEncoder"/>
         </security:authentication-provider>
     </security:authentication-manager>
-    <bean class="org.springframework.security.provisioning.JdbcUserDetailsManager"/>
 </beans>
 
 
