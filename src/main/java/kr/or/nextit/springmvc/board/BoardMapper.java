@@ -14,4 +14,6 @@ public interface BoardMapper {
 	
 	// 첨부파일 저장
 	int insertFile(List<FileDTO> file);
+
+	void updateCount(int id);
 }

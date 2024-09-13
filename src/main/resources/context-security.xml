@@ -6,7 +6,6 @@
     <!--
         로그인 및 로그아웃, 요청(url)과 권한에 따른 동작 제어
     -->
-
     <security:http>
         <security:form-login login-page="/login" default-target-url="/boards" />
         <security:logout invalidate-session="true" logout-success-url="/boards"/>

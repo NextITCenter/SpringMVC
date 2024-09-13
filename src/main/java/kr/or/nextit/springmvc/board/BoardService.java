@@ -16,6 +16,7 @@ public class BoardService {
     }
 
     public BoardDTO selectBoard(int id) {
+        mapper.updateCount(id);
         return mapper.selectBoard(id);
     }
 

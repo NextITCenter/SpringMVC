@@ -14,7 +14,7 @@
 <body>
 <div class="container">
     <h2>회원 가입</h2>
-    <form class="needs-validation my-3" novalidate="">
+    <form class="needs-validation my-3" novalidate action="/membro/register" method="post">
         <div class="row g-3">
             <div class="col-12">
                 <label for="id" class="form-label">ID</label>
@@ -22,10 +22,10 @@
                     <input type="text" class="form-control" id="id" name="id" placeholder="ID" required>
                     <button class="btn btn-outline-secondary" type="button" id="idCheck">ID 중복 검사</button>
                     <div class="valid-feedback">
-                        사용하실 수 있는 ID입니다.
+                        해당 아이디는 사용하실 수 있습니다.
                     </div>
                     <div class="invalid-feedback">
-                        ID는 반드시 입력해야 합니다.
+                        해당 아이디는 사용하실 수 없습니다.
                     </div>
                 </div>
             </div>
@@ -38,9 +38,12 @@
             </div>
             <div class="col-12">
                 <label for="passwordConfirm" class="form-label">패스워드 확인</label>
-                <input type="password" class="form-control" id="passwordConfirm" name="password" required>
+                <input type="password" class="form-control" id="passwordConfirm" name="password">
                 <div class="invalid-feedback">
                     패스워드가 일치하지 않습니다.
+                </div>
+                <div class="valid-feedback">
+                    패스워드가 일치합니다.
                 </div>
             </div>
             <div class="col-12">
@@ -59,7 +62,7 @@
             </div>
             <div class="col-12 my-3">
                 <label for="mobileNumber" class="form-label">휴대전화번호</label>
-                <input type="number" class="form-control" id="mobileNumber" name="mobileNumber" placeholder="010-1234-5678" required>
+                <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber" placeholder="010-1234-5678" required>
                 <div class="invalid-feedback">
                     휴대전화번호를 입력하세요.
                 </div>
@@ -85,23 +88,40 @@
                 form.classList.add('was-validated')
             }, false)
         })
+        const passwordEl = document.querySelector("#password")
+        const passwordConfirmEl = document.querySelector("#passwordConfirm")
+        passwordConfirmEl.addEventListener("keyup", (evt) => {
+            let pcEl = evt.target
+            pcEl.classList.remove("is-invalid", "is-valid")
+            if (pcEl.value === passwordEl.value) {
+                pcEl.classList.add("is-valid")
+            } else {
+                pcEl.classList.add("is-invalid")
+            }
+        })
     })()
     const idCheck = document.querySelector("#idCheck");
+    const idEl = document.querySelector("#id");
     idCheck.addEventListener("click", () => {
-        let idValue = document.querySelector("#id").value;
+        idEl.classList.remove("is-invalid", "is-valid")
+        let idValue = idEl.value;
         if (idValue.length == 0) {
-            alert("아이디를 입력하세요.")
-            document.querySelector("#id").focus()
+            idEl.setCustomValidity("ID를 입력하세요.")
+            // checkValidity()는 폼 태그 전체에서 사용하는 것
+            // reportValidity()는 입력태그(input, textarea, select)에서 개별적으로 사용
+            idEl.reportValidity()
+            idEl.focus()
             return;
         }
         fetch(`/check/\${idValue}`)
             .then(response => response.json())
             .then(data => {
                 if (data.result == "ok") {
-                    
                     // .invalid-feedback에 "해당 아이디는 사용하실 수 있습니다." 정보 표시
+                    idEl.classList.add("is-valid")
                 } else {
                     // .invalid-feedback에 "해당 아이디는 사용하실 수 없습니다." 정보 표시
+                    idEl.classList.add("is-invalid")
                 }
             })
     })

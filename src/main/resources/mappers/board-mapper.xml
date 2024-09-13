@@ -95,4 +95,13 @@
 		WHERE
 			BOARD_ID = #{boardId}
 	</select>
+
+	<update id="updateCount" parameterType="int">
+		UPDATE
+			BOARD
+		SET
+			HITS = HITS + 1
+		WHERE
+			BOARD_ID = #{boardId}
+	</update>
 </mapper>

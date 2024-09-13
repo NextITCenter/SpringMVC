@@ -36,17 +36,17 @@
             A.ID = #{id}
     </select>
     <insert id="registerMembro" parameterType="membroVO">
-        insert into
-            membro
-            (id, password, name, email, mobile_number)
-        values
+        INSERT INTO
+            MEMBRO
+            (ID, PASSWORD, NAME, EMAIL, MOBILE_NUMBER)
+        VALUES
             (#{id}, #{password}, #{name}, #{email}, #{mobileNumber})
     </insert>
     <insert id="registerAuthority" parameterType="authorityVO">
-        insert into
-            authorities
-            (membroId, authority)
-        values
+        INSERT INTO
+            AUTHORITIES
+            (MEMBRO_ID, AUTHORITY)
+        VALUES
             (#{membroId}, #{authority})
     </insert>
 </mapper>
