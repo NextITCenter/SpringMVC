@@ -1,15 +1,12 @@
 package kr.or.nextit.springmvc.login;
 
 import lombok.RequiredArgsConstructor;
-import oracle.jdbc.proxy.annotation.Post;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -21,6 +18,7 @@ public class LoginController {
     public String login() {
         return "login";
     }
+
     @GetMapping("/membro/register")
     public String registerMembro() {
         return "membro/register";
@@ -42,5 +40,4 @@ public class LoginController {
             return Map.of("result", "ok");
         }
     }
-
 }

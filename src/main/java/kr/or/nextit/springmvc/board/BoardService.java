@@ -3,6 +3,7 @@ package kr.or.nextit.springmvc.board;
 import kr.or.nextit.springmvc.file.FileDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,12 +15,13 @@ public class BoardService {
     public List<BoardDTO> selectBoards() {
         return mapper.selectBoards();
     }
-
+    @Transactional
     public BoardDTO selectBoard(int id) {
-        mapper.updateCount(id);
+        mapper.updateHits(id);
         return mapper.selectBoard(id);
     }
 
+    @Transactional
     public int registerBoard(BoardDTO board) {
         int retValue = mapper.registerBoard(board);
         // 게시글을 등록한 뒤에 방금 등록된 게시글 번호를 가져와서

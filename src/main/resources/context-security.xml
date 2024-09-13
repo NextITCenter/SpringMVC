@@ -14,7 +14,7 @@
          POST 방식으로 요청시 토큰을 발행하여 csrf 공격 방지
          개발 단계에서만 설정하고 운영할 때는 다시 해제시켜야함
          -->
-<!--        <security:csrf disabled="true"/>-->
+        <security:csrf disabled="true"/>
 
         <!--
          isAuthenticated(): 로그인한 사용자인지 => 로그인이 되어 있으면 true
@@ -23,13 +23,13 @@
          denyAll(): 모든 권한 접근 거부 => access 조건을 false 로 만든다.
         -->
 
-        <security:intercept-url pattern="/todo/**" access="hasRole('ROLE_MANAGER')"/>
+        <security:intercept-url pattern="/todo/**" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/boards" access="permitAll()"/>
-        <security:intercept-url pattern="/boards/*" access="hasRole('ROLE_MANAGER')"/>
+        <security:intercept-url pattern="/boards/*" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/member/**" access="isAnonymous()"/>
-        <security:intercept-url pattern="/comment/new" access="hasRole('ROLE_MANAGER')"/>
+        <security:intercept-url pattern="/comment/new" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/login" access="permitAll()"/>
-        <security:intercept-url pattern="/logout" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/logout" access="permitAll()"/>
         <security:intercept-url pattern="/membro/register" access="permitAll()"/>
     </security:http>
 

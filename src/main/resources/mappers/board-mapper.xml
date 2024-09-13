@@ -42,6 +42,14 @@
 		WHERE
 			ID = #{id}
 	</select>
+	<update id="updateHits" parameterType="int">
+		UPDATE
+			BOARD
+		SET
+			HITS = HITS + 1
+		WHERE
+			ID = #{id}
+	</update>
 	<insert id="registerBoard" parameterType="boardDTO"
 			useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		INSERT INTO
@@ -96,12 +104,4 @@
 			BOARD_ID = #{boardId}
 	</select>
 
-	<update id="updateCount" parameterType="int">
-		UPDATE
-			BOARD
-		SET
-			HITS = HITS + 1
-		WHERE
-			BOARD_ID = #{boardId}
-	</update>
 </mapper>

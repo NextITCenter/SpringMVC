@@ -8,6 +8,8 @@ import java.util.List;
 public interface BoardMapper {
 	List<BoardDTO> selectBoards();
 	BoardDTO selectBoard(int id);
+	void updateHits(int id);
+
 	int registerBoard(BoardDTO board);
 	int modifyBoard(BoardDTO board);
 	int removeBoard(int id);
@@ -15,5 +17,4 @@ public interface BoardMapper {
 	// 첨부파일 저장
 	int insertFile(List<FileDTO> file);
 
-	void updateCount(int id);
 }
