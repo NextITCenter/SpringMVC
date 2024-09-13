@@ -7,14 +7,14 @@
         로그인 및 로그아웃, 요청(url)과 권한에 따른 동작 제어
     -->
     <security:http>
-        <security:form-login login-page="/login" default-target-url="/boards" />
+        <security:form-login default-target-url="/boards" />
         <security:logout invalidate-session="true" logout-success-url="/boards"/>
         <!--
          csrf(Cross-site request forgery): 사이트간 요청 위조
          POST 방식으로 요청시 토큰을 발행하여 csrf 공격 방지
          개발 단계에서만 설정하고 운영할 때는 다시 해제시켜야함
          -->
-        <security:csrf disabled="true"/>
+<!--        <security:csrf disabled="true"/>-->
 
         <!--
          isAuthenticated(): 로그인한 사용자인지 => 로그인이 되어 있으면 true

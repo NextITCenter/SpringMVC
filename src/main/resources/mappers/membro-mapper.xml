@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.nextit.springmvc.membro.MembroMapper">
+
+    <insert id="registerMembro" parameterType="membroVO">
+        INSERT INTO
+            MEMBRO
+            (ID, PASSWORD, NAME, EMAIL, MOBILE_NUMBER)
+        VALUES
+            (#{id}, #{password}, #{name}, #{email}, #{mobileNumber})
+    </insert>
+    <insert id="registerAuthority" parameterType="authorityVO">
+        INSERT INTO
+            AUTHORITIES
+            (MEMBRO_ID, AUTHORITY)
+        VALUES
+            (#{membroId}, #{authority})
+    </insert>
+</mapper>
+
+
+
+

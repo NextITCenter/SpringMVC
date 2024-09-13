@@ -1,4 +1,4 @@
-package kr.or.nextit.springmvc.login;
+package kr.or.nextit.springmvc.membro;
 
 import lombok.Data;
 
