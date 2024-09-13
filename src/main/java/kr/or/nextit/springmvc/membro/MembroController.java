@@ -19,6 +19,7 @@ public class MembroController {
 
     @GetMapping("/membro/list")
     public String membroList(Model model) {
+        model.addAttribute("membros", membroService.selectMembroList());
         return "membro/list";
     }
 
