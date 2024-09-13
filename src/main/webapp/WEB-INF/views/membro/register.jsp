@@ -1,3 +1,4 @@
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: pc11
@@ -69,6 +70,7 @@
             </div>
         </div>
         <button class="w-100 btn btn-primary btn-lg" type="submit">회원 가입</button>
+        <security:csrfInput/>
     </form>
 </div>
 <script src="/js/bootstrap.bundle.min.js"></script>
