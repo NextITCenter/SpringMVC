@@ -47,9 +47,14 @@ public class MembroController {
     }
 
     @GetMapping("/membro/delete")
-    public String deleteMembro(String id) {
-        membroService.deleteMembro(id);
-        return "redirect:/membro/list";
+    @ResponseBody
+    public Map<String, String> deleteMembro(String id) {
+        try {
+            membroService.deleteMembro(id);
+            return Map.of("id", id);
+        } catch (Exception e) {
+            return Map.of("error", e.getMessage());
+        }
     }
 
     @GetMapping("/check/{id}")

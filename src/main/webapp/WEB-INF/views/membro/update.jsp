@@ -82,7 +82,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="alertModal" aria-hidden="true" aria-labelledby="alertModalLabel" tabindex="-1">
+<div class="modal fade" id="alertModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="alertModalLabel" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -93,8 +93,8 @@
                 님 탈퇴되었습니다.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
-                <button class="btn btn-primary" data-bs-target="#confirmModal" data-bs-toggle="modal">뒤로 가기</button>
+                <button type="button" id="confirmBtn" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+                <button class="btn btn-primary" id="backBtn" data-bs-target="#confirmModal" data-bs-toggle="modal">뒤로 가기</button>
             </div>
         </div>
     </div>
@@ -131,15 +131,36 @@
             // evt.stopPropagation() => 이벤트의 전파를 막는 것
         }
     })
-    const removeBtn = document.querySelector("#removeBtn")
-    removeBtn.addEventListener("click", () => {
-        fetch("/membro/delete?id=" + document.querySelector("#id").value)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                // 삭제 성공하면 알림창 보여주기
-            })
-    })
+    // const removeBtn = document.querySelector("#removeBtn")
+    // removeBtn.addEventListener("click", () => {
+    //     fetch("/membro/delete?id=" + document.querySelector("#id").value)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log(data)
+    //             // 삭제 성공하면 알림창 보여주기
+    //         })
+    // })
+    const alertModal = document.querySelector("#alertModal")
+    if (alertModal) {
+        const modalBody = alertModal.querySelector(".modal-body")
+        const confirmBtn = alertModal.querySelector("#confirmBtn")
+        const backBtn = alertModal.querySelector("#backBtn")
+        alertModal.addEventListener("show.bs.modal", (evt) => {
+            fetch("/membro/delete?id=" + document.querySelector("#id").value)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.id != null) {
+                        // 회원 탈퇴 정보 보여주기
+                        modalBody.textContent = `\${data.id}님 탈퇴되었습니다.`
+                        backBtn.classList.add("d-none")// => 화면에서 안보여줌
+                    } else {
+                        // 에러 메시지 보여주기
+                        modalBody.textContent = `\${data.error}`
+                        confirmBtn.classList.add("d-none")
+                    }
+                })
+        })
+    }
 </script>
 </body>
 </html>
