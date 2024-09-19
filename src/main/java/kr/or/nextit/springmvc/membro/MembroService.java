@@ -12,9 +12,13 @@ import java.util.List;
 public class MembroService {
     private final MembroMapper mapper;
     private final PasswordEncoder encoder;
-    
+
     public List<MembroVO> selectMembroList() {
         return mapper.selectMembroList();
+    }
+
+    public MembroVO selectMembro(String id) {
+        return mapper.selectMembro(id);
     }
 
     @Transactional
@@ -25,5 +29,9 @@ public class MembroService {
         authorityVO.setMembroId(membro.getId());
 //        authorityVO.setAuthority("ROLE_MANAGER");
         mapper.registerAuthority(authorityVO);
+    }
+
+    public void updateMembro(MembroVO membro) {
+        mapper.modifyMembro(membro);
     }
 }

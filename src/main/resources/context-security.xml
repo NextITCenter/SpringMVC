@@ -30,7 +30,7 @@
         <security:intercept-url pattern="/comment/new" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/login" access="permitAll()"/>
         <security:intercept-url pattern="/logout" access="permitAll()"/>
-        <security:intercept-url pattern="/membro/register" access="permitAll()"/>
+        <security:intercept-url pattern="/membro/**" access="permitAll()"/>
     </security:http>
 
     <!-- 반드시 패스워드를 암호화해서 처리해야한다. -->

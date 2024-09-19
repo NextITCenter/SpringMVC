@@ -14,6 +14,21 @@
         FROM
             MEMBRO
     </select>
+    <select id="selectMembro" parameterType="string" resultType="membroVO">
+        SELECT
+            ID,
+            PASSWORD,
+            NAME,
+            EMAIL,
+            MOBILE_NUMBER,
+            REGISTER_DATE,
+            MODIFIED_DATE,
+            ENABLED
+        FROM
+            MEMBRO
+        WHERE
+            ID = #{id}
+    </select>
     <insert id="registerMembro" parameterType="membroVO">
         INSERT INTO
             MEMBRO
@@ -28,6 +43,18 @@
         VALUES
             (#{membroId}, #{authority})
     </insert>
+    <update id="modifyMembro" parameterType="membroVO">
+        UPDATE
+            MEMBRO
+        <set>
+            <if test="name != null">NAME = #{name},</if>
+            <if test="email != null">EMAIL = #{email},</if>
+            <if test="mobileNumber != null">MOBILE_NUMBER = #{mobileNumber},</if>
+            MODIFIED_DATE = SYSDATE
+        </set>
+        WHERE
+            ID = #{id}
+    </update>
 </mapper>
 
 

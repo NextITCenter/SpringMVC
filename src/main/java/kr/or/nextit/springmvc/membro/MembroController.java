@@ -23,6 +23,12 @@ public class MembroController {
         return "membro/list";
     }
 
+    @GetMapping("/membro/{id}")
+    public String membroDetail(@PathVariable String id, Model model) {
+        model.addAttribute("membro", membroService.selectMembro(id));
+        return "membro/update";
+    }
+
     @GetMapping("/membro/register")
     public String registerMembro() {
         return "membro/register";
@@ -32,6 +38,12 @@ public class MembroController {
     public String registerMembro(MembroVO membro) {
         membroService.registerMembro(membro);
         return "redirect:/boards";
+    }
+
+    @PostMapping("/membro/update")
+    public String updateMembro(MembroVO membro) {
+        membroService.updateMembro(membro);
+        return "redirect:/membro/list";
     }
 
     @GetMapping("/check/{id}")
