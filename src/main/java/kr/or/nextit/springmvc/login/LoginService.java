@@ -20,6 +20,7 @@ public class LoginService implements UserDetailsService {
         MembroVO membro = mapper.selectMembroById(username);
         return User.withUsername(username)
                 .password(membro.getPassword())
+                .disabled(!membro.isEnabled())
                 .authorities(membro.getAuthorities())
                 .build();
     }

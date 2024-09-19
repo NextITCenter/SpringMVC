@@ -53,10 +53,51 @@
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
             <button class="btn btn-primary btn-lg" id="modifyBtn" type="button">정보 변경</button>
-            <button class="btn btn-primary btn-lg" type="button">회원 탈퇴</button>
+            <button class="btn btn-primary btn-lg" type="button"
+                    data-bs-toggle="modal" data-bs-target="#confirmModal">
+                회원 탈퇴
+            </button>
         </div>
         <security:csrfInput/>
     </form>
+</div>
+<div class="modal fade" id="confirmModal" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">회원 탈퇴</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    30일간 회원 정보를 유지하고 있습니다. 30일 안에 회원 정보를 복구할 수 있습니다.
+                    30일이 지나면 회원 복구가 불가능합니다.
+                    정말로 탈퇴하시겠습니까?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" id="removeBtn" data-bs-target="#alertModal"  data-bs-toggle="modal" class="btn btn-primary">탈퇴</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="alertModal" aria-hidden="true" aria-labelledby="alertModalLabel" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="alertModalLabel">결과</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                님 탈퇴되었습니다.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+                <button class="btn btn-primary" data-bs-target="#confirmModal" data-bs-toggle="modal">뒤로 가기</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -81,7 +122,7 @@
         const btn = evt.target; // => 클릭했을 때 클릭한 대상이 바로 target
         if (btn.textContent !== "수정") {
             btn.textContent = "수정"
-            // document.querySelector("#username").readOnly = false;
+            document.querySelector(".container>h2").textContent = "회원 정보 수정"
             document.querySelector("#username").removeAttribute("readonly")
             document.querySelector("#email").readOnly = false
             document.querySelector("#mobileNumber").removeAttribute("readonly")
@@ -89,6 +130,15 @@
             evt.preventDefault();// 원래 실행해야할 이벤트를 막아주는 함수
             // evt.stopPropagation() => 이벤트의 전파를 막는 것
         }
+    })
+    const removeBtn = document.querySelector("#removeBtn")
+    removeBtn.addEventListener("click", () => {
+        fetch("/membro/delete?id=" + document.querySelector("#id").value)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                // 삭제 성공하면 알림창 보여주기
+            })
     })
 </script>
 </body>

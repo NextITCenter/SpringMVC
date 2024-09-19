@@ -34,4 +34,8 @@ public class MembroService {
     public void updateMembro(MembroVO membro) {
         mapper.modifyMembro(membro);
     }
+
+    public void deleteMembro(String id) {
+        mapper.removeMembro(id);
+    }
 }

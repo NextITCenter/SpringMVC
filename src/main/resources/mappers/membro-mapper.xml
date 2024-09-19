@@ -13,6 +13,8 @@
             ENABLED
         FROM
             MEMBRO
+        WHERE
+            ENABLED = '1'
     </select>
     <select id="selectMembro" parameterType="string" resultType="membroVO">
         SELECT
@@ -28,6 +30,7 @@
             MEMBRO
         WHERE
             ID = #{id}
+            AND ENABLED = '1'
     </select>
     <insert id="registerMembro" parameterType="membroVO">
         INSERT INTO
@@ -55,6 +58,27 @@
         WHERE
             ID = #{id}
     </update>
+    <delete id="removeMembro" parameterType="string">
+        UPDATE
+            MEMBRO
+        SET
+            MODIFIED_DATE = SYSDATE,
+            ENABLED = '0'
+        WHERE
+            ID = #{id}
+    </delete>
+    <insert id="grantAuthority" parameterType="authorityVO">
+        INSERT INTO
+            AUTHORITIES
+        VALUES
+            (#{membroId}, #{authority})
+    </insert>
+    <delete id="revokeAuthority" parameterType="string">
+        DELETE FROM
+            AUTHORITIES
+        WHERE
+            MEMBRO_ID = #{membroId}
+    </delete>
 </mapper>
 
 

@@ -46,6 +46,12 @@ public class MembroController {
         return "redirect:/membro/list";
     }
 
+    @GetMapping("/membro/delete")
+    public String deleteMembro(String id) {
+        membroService.deleteMembro(id);
+        return "redirect:/membro/list";
+    }
+
     @GetMapping("/check/{id}")
     @ResponseBody
     public Map<String, String> checkId(@PathVariable String id) {
