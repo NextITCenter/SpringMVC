@@ -11,6 +11,6 @@ public interface MembroMapper {
 
     List<AuthorityVO> selectAuthority(String membroId);
     void grantAuthority(AuthorityVO authority);
-    void revokeAuthority(String membroId);
+    void revokeAuthority(AuthorityVO authority);
 
 }

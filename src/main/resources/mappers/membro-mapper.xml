@@ -75,11 +75,12 @@
         VALUES
             (#{membroId}, #{authority})
     </insert>
-    <delete id="revokeAuthority" parameterType="string">
+    <delete id="revokeAuthority" parameterType="authorityVO">
         DELETE FROM
             AUTHORITIES
         WHERE
             MEMBRO_ID = #{membroId}
+            AND AUTHORITY = #{authority}
     </delete>
 </mapper>
 

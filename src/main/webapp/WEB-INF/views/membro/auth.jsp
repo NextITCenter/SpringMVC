@@ -28,16 +28,24 @@
         </ul>
     </div>
     <ul class="list-group">
-        <c:forEach items="${authorities}" var="auth">
-            <li class="list-group-item">${auths.stream().filter(a -> auth.authority == a).findFirst().get().getTitle()}</li>
+        <c:forEach items="${authorities}" var="auth" varStatus="status">
+            <li class="list-group-item">
+                <input class="form-check-input me-1" type="checkbox" value="${auth.authority}" data-membro-id="${param.id}" id="auth${status.count}">
+                <label class="form-check-label" for="auth${status.count}">${auths.stream().filter(a -> auth.authority == a).findFirst().get().getTitle()}</label>
+            </li>
         </c:forEach>
     </ul>
+    <div>
+        <button class="btn btn-danger" type="button" id="deleteBtn">권한 삭제</button>
+        <!-- 권한 삭제 버튼 클릭시 권한 삭제하는 과제(2024.09.20) -->
+    </div>
 </div>
 <input type="hidden" id="membroId" value="${param.id}">
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script>
     const searchParams = new URLSearchParams(location.search)
     const dropdownItems = document.querySelectorAll(".dropdown-item")
+    const listGroup = document.querySelector(".list-group")
     dropdownItems.forEach(item => {
         item.addEventListener("click", evt => {
             const csrfHeader = document.querySelector("meta[name=_csrf_header]").getAttribute("content")
@@ -56,7 +64,32 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data)
-                location.reload();
+                if (data.result === "success") {
+                    // 동적으로 태그 만들기
+                    // 1. document의 createElement() 함수 사용
+                    const inputEl = document.createElement("input")
+                    inputEl.classList.add("form-check-input", "me-1")
+                    inputEl.setAttribute("type", "checkbox")
+                    inputEl.setAttribute("value", "?")
+                    inputEl.setAttribute("data-membro-id", "?")
+                    inputEl.setAttribute("id", "auth0")
+
+                    const labelEl = document.createElement("label")
+                    labelEl.classList.add("form-check-label")
+                    labelEl.setAttribute("for", "auth0")
+                    labelEl.textContent = "?"
+
+                    const liEl = document.createElement("li")
+                    liEl.classList.add("list-group-item")
+                    liEl.appendChild(inputEl)
+                    liEl.appendChild(labelEl)
+
+                    listGroup.appendChild(liEl)
+                    // 2. innerHTML을 사용
+                    // listGroup.innerHTML += `<li class="list-group-item">\${evt.target.textContent}</li>`
+                } else {
+                    alert("권한이 정상적으로 등록되지 않았습니다.");
+                }
             })
         })
     })

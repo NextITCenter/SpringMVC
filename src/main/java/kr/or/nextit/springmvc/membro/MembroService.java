@@ -47,7 +47,7 @@ public class MembroService {
         mapper.grantAuthority(authorityVO);
     }
 
-    public void revokeAuthority(String membroId) {
-        mapper.revokeAuthority(membroId);
+    public void revokeAuthority(AuthorityVO authority) {
+        mapper.revokeAuthority(authority);
     }
 }
