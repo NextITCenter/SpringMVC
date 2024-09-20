@@ -4,11 +4,9 @@ import kr.or.nextit.springmvc.login.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +70,19 @@ public class MembroController {
     @GetMapping("/membro/auth")
     public String manageAuth(String id, Model model) {
         model.addAttribute("authorities", membroService.selectAuthority(id));
+        model.addAttribute("auths", Authority.values());
+//        Arrays.stream(Authority.values()).filter(a -> a.getTitle() != "ROLE_USER").toList();
         return "membro/auth";
+    }
+
+    @PostMapping("/membro/auth")
+    @ResponseBody
+    public Map<String, String> manageAuth(@RequestBody AuthorityVO auth) {
+        try {
+            membroService.grantAuthority(auth);
+            return Map.of("result", "success");
+        } catch (Exception e) {
+            return Map.of("result", "failure");
+        }
     }
 }
