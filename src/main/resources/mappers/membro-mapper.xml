@@ -39,13 +39,6 @@
         VALUES
             (#{id}, #{password}, #{name}, #{email}, #{mobileNumber})
     </insert>
-    <insert id="registerAuthority" parameterType="authorityVO">
-        INSERT INTO
-            AUTHORITIES
-            (MEMBRO_ID, AUTHORITY)
-        VALUES
-            (#{membroId}, #{authority})
-    </insert>
     <update id="modifyMembro" parameterType="membroVO">
         UPDATE
             MEMBRO
@@ -67,6 +60,15 @@
         WHERE
             ID = #{id}
     </delete>
+    <select id="selectAuthority" parameterType="string" resultType="authorityVO">
+        SELECT
+            MEMBRO_ID,
+            AUTHORITY
+        FROM
+            AUTHORITIES
+        WHERE
+            MEMBRO_ID = #{membroId}
+    </select>
     <insert id="grantAuthority" parameterType="authorityVO">
         INSERT INTO
             AUTHORITIES

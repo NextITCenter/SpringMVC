@@ -160,6 +160,9 @@
                     }
                 })
         })
+        confirmBtn.addEventListener("click", () => {
+            location.href = "/membro/list"
+        })
     }
 </script>
 </body>

@@ -9,6 +9,8 @@ public interface MembroMapper {
     void modifyMembro(MembroVO membro);
     void removeMembro(String id);
 
-    void registerAuthority(AuthorityVO authority);
+    List<AuthorityVO> selectAuthority(String membroId);
+    void grantAuthority(AuthorityVO authority);
+    void revokeAuthority(String membroId);
 
 }

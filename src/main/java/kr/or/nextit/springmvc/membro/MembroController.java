@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -66,5 +67,11 @@ public class MembroController {
         } catch (Exception e) {
             return Map.of("result", "ok");
         }
+    }
+
+    @GetMapping("/membro/auth")
+    public String manageAuth(String id, Model model) {
+        model.addAttribute("authorities", membroService.selectAuthority(id));
+        return "membro/auth";
     }
 }

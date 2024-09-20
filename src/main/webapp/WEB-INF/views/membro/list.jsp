@@ -21,6 +21,7 @@
             <th>이름</th>
             <th>휴대전화번호</th>
             <th>이메일</th>
+            <th></th>
         </tr>
         <c:forEach items="${membros}" var="m">
             <tr>
@@ -28,6 +29,7 @@
                 <td><a href="/membro/${m.id}">${m.name}</a></td>
                 <td>${m.mobileNumber}</td>
                 <td>${m.email}</td>
+                <td><a href="/membro/auth?id=${m.id}" class="btn btn-outline-primary">권한</a></td>
             </tr>
         </c:forEach>
     </table>

@@ -28,7 +28,7 @@ public class MembroService {
         AuthorityVO authorityVO = new AuthorityVO();
         authorityVO.setMembroId(membro.getId());
 //        authorityVO.setAuthority("ROLE_MANAGER");
-        mapper.registerAuthority(authorityVO);
+        mapper.grantAuthority(authorityVO);
     }
 
     public void updateMembro(MembroVO membro) {
@@ -37,5 +37,17 @@ public class MembroService {
 
     public void deleteMembro(String id) {
         mapper.removeMembro(id);
+    }
+
+    public List<AuthorityVO> selectAuthority(String membroId) {
+        return mapper.selectAuthority(membroId);
+    }
+
+    public void grantAuthority(AuthorityVO authorityVO) {
+        mapper.grantAuthority(authorityVO);
+    }
+
+    public void revokeAuthority(String membroId) {
+        mapper.revokeAuthority(membroId);
     }
 }
